@@ -1,16 +1,15 @@
-import GameBoard from "./Gameboard.js";
 
 class GameLogic {
 
     constructor(gameBoard){
         this.gameBoard = gameBoard;
         this.currentPlayer = "X";
-        this.gameOver = false;
+        //this.gameOver = false;
     }
 
     rightClick(cell){
         //if game over, dont let user make a move
-        if(this.gameOver){
+        if(this.gameBoard.isgameOver === true){
             return;
         }
 
@@ -33,7 +32,7 @@ class GameLogic {
 
     leftClick(cell){
         //if game over, dont let user make a move
-        if(this.gameOver){
+        if(this.gameBoard.isgameOver === true){
             return;
         }
 
@@ -50,6 +49,10 @@ class GameLogic {
             //}
         //}
 
+    }
+
+    checkGameOver(){
+        
     }
 
 

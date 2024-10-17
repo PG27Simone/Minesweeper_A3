@@ -11,6 +11,7 @@ class GameBoard {
         this.rows = rows;
         this.cols = cols;
         this.board = this.createBoard();
+        this.isgameOver = false;
     }
 
     createBoard() {
@@ -78,7 +79,7 @@ class GameBoard {
 		//else if it is hidden, flag it
 		else{
 			cell.dataset.status = tile_stats.FLAGGED
-			console.log(cell)
+            const table = document.createElement("table");
 		}
     }
 
@@ -87,7 +88,7 @@ class GameBoard {
 		//if tile is not hidden AND not flagged, dont do anything
 		if(cell.dataset.status === tile_stats.MINE_HIDDEN){
 			cell.dataset.status = tile_stats.MINE
-			this.gameOver();	
+			this.gameOver()	
 		}else{
 			cell.dataset.status = tile_stats.NUMBER
 		}
@@ -95,7 +96,24 @@ class GameBoard {
 	}
 
 	gameOver(){
-		console.log("game over")
+
+        this.isgameOver = true;
+        //you lost message
+        const para = document.createElement("p")
+        const node = document.createTextNode("You Lost...")
+        para.appendChild(node)
+
+        const container = document.getElementById("results")
+        container.appendChild(para)
+		
+        //restart
+        var button = document.createElement("button");
+        button.innerHTML = "Restart?";
+        var body = document.getElementById("results");
+        body.appendChild(button);
+        button.addEventListener ("click", function() {
+        alert("did something");
+        });
 	}
 }
 
