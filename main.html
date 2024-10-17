@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Minesweeper</title>
+	<link rel="stylesheet" href="style.css">
+	<script type="module" src="Gameboard.js"></script>
+</head>
+
+<body>
+	<header>
+		<!-- Title -->
+		<h1>MINESWEEPER</h1>
+		<nav>
+			<ul>
+				<li><a href="">Game</a></li>
+				<li><a href="">Instructions</a></li>
+				<li><a href="">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<div class="content">
+
+		<!-- Intro text -->
+		<main class="intro-container">
+			<section class="intro-text">
+				<p>Welcome to Minesweeper! Start by selecting a level and then start the game!</p>
+			</section>
+		</main>
+
+		<!-- Level buttons -->
+		<main class="level-container">
+			<section class="three-levels">
+				<button class=beginner>Beginner</button>
+				<button class=intermediate>Intermediate</button>
+				<button class=expert>Expert</button>
+			</section>
+			<p>Level Selected: Level here</p>
+		</main>
+
+		<!-- Start Button -->
+		<main class="start-container">
+			<section class="start-button">
+				<button class="start-game">START GAME</button>
+			</section>
+		</main>
+
+		<!-- timer and flag num -->
+		<main class="stats-container">
+			<p class="border"><span mine-counter></span><p>
+			<p class="border">00<p>
+		</main>
+
+		<!-- JS Board -->
+		
+		<div id="game-container"></div>
+
+		<script type="module" src="Minesweeper.js"></script>
+	
+
+		<!-- Lost/won -->
+		<main class="game-result">
+			<p>You Lost/Won<p>
+			<p>Restart?<p>
+		</main>
+
+		<!-- Footer -->
+		<div class="footer-container">
+			<footer>
+				<p>2024. All Rights Reserved.</p>
+			</footer>
+		</div>
+
+	</div>
+
+
+
+</body>
+
+
+</html>
