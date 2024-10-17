@@ -40,7 +40,7 @@ body{
 }
 
 .game-tile > [data-status="mine_hidden"] {
-    background-color: #929292;
+    background-color: #640303;
     cursor: pointer;
 }
 
@@ -51,6 +51,11 @@ body{
 
 .game-tile > [data-status="flagged"] {
     background-color: yellow;
+    cursor: pointer;
+}
+
+.game-tile > [data-status="open"] {
+    background-color: #BBB;
     cursor: pointer;
 }
 

@@ -3,9 +3,10 @@ class GameLogic {
 
     constructor(gameBoard){
         this.gameBoard = gameBoard;
-        this.currentPlayer = "X";
         //this.gameOver = false;
     }
+
+    //setInterval(setTime, 1000);
 
     rightClick(cell){
         //if game over, dont let user make a move
@@ -17,15 +18,7 @@ class GameLogic {
             this.gameBoard.updateCell(cell);
             //this.gameBoard.renderBoard("game-container");
 
-            //if(this.checkForWin()){
-             //   this.gameOver = true;
-             //   alert('Player ${this.currentPlayer} wins!')
-            //}else if(this.checkForDraw()){
-            //    this.gameOver = true;
-            //    alert("It's a draw!")
-            //}else{
-             //   this.switchPlayer(); 
-            //}
+            
         //}
 
     }
@@ -38,23 +31,10 @@ class GameLogic {
 
             this.gameBoard.openCell(cell);
 
-            //if(this.checkForWin()){
-             //   this.gameOver = true;
-             //   alert('Player ${this.currentPlayer} wins!')
-            //}else if(this.checkForDraw()){
-            //    this.gameOver = true;
-            //    alert("It's a draw!")
-            //}else{
-             //   this.switchPlayer(); 
-            //}
+           
         //}
 
     }
-
-    checkGameOver(){
-        
-    }
-
 
 }
 
