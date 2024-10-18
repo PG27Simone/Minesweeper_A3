@@ -62,27 +62,26 @@ class GameBoard {
 	
     }
 
+    //get random number between 0 and 22 for mine generator
     getRandomInt(max) {
         return Math.floor(Math.random() * max);
     }
 
     createMines(mineNum){
-        let count = 0;
-            while (count < mineNum) {
-                const cell = document.getElementById(this.getRandomInt(225))
-                //make sure it doesnt create a mine on first clicked tile
-                if(cell.dataset.status !== tile_stats.OPEN){
-                    //if not already mine, set as mine
-                    if(cell.dataset.status !== tile_stats.MINE_HIDDEN){
-                        cell.dataset.status = tile_stats.MINE_HIDDEN
-                        count++
-                    }
-
-                    
-                }else{
-                    cell.dataset.status = tile_stats.OPEN
+    let count = 0;
+        while (count < mineNum) {
+            const cell = document.getElementById(this.getRandomInt(225))
+            //make sure it doesnt create a mine on first clicked tile
+            if(cell.dataset.status !== tile_stats.OPEN){
+                //if not already mine, set as mine
+                if(cell.dataset.status !== tile_stats.MINE_HIDDEN){
+                    cell.dataset.status = tile_stats.MINE_HIDDEN
+                    count++
                 }
-            }     
+            }else{
+                cell.dataset.status = tile_stats.OPEN
+            }
+        }     
     }
 
     updateCell(cell) {
@@ -109,10 +108,7 @@ class GameBoard {
         }
     }
 
-
 	openCell(cell){
-
-        let isDone = false
 
         if(!this.firstclick){
 
@@ -122,20 +118,23 @@ class GameBoard {
                 this.gameOver()	
             }
             else if(cell.dataset.status === tile_stats.FLAGGED){
-                this.flagCount++
-                document.getElementById("counter").innerHTML = this.flagCount;
-                cell.dataset.status = tile_stats.OPEN
+                cell.dataset.status = tile_stats.FLAGGED
             }     
             else{
                 cell.dataset.status = tile_stats.OPEN
+
+                //numbering
+                this.mineCounter(cell)
             }
+
+
+
         }else{
             
             //on first clikc, set it to open
             cell.dataset.status = tile_stats.OPEN
 
             //open up first round
-
             let id = cell.id
 
             //clearing spaces around first click tile
@@ -147,19 +146,72 @@ class GameBoard {
             const downright = document.getElementById(id*1 + 16)
             const upleft = document.getElementById(id*1 - 16)
             const downleft = document.getElementById(id*1 + 14)
-            left.dataset.status = tile_stats.OPEN
-            right.dataset.status = tile_stats.OPEN
-            up.dataset.status = tile_stats.OPEN
-            down.dataset.status = tile_stats.OPEN
-            upright.dataset.status = tile_stats.OPEN
-            downright.dataset.status = tile_stats.OPEN
-            upleft.dataset.status = tile_stats.OPEN
-            downleft.dataset.status = tile_stats.OPEN
+
+            if(left !== null && left.dataset.row === cell.dataset.row){
+                left.dataset.status = tile_stats.OPEN
+                this.mineCounter(left)
+            }
+            if(right !== null && right.dataset.row === cell.dataset.row){
+                right.dataset.status = tile_stats.OPEN
+                this.mineCounter(right)
+            }
+            if(up !== null){
+                up.dataset.status = tile_stats.OPEN
+                this.mineCounter(up)
+            }
+            if(down !== null){
+                down.dataset.status = tile_stats.OPEN
+                this.mineCounter(down)
+            }
+            if(upright !== null && upright.dataset.row !== cell.dataset.row){
+                upright.dataset.status = tile_stats.OPEN
+                this.mineCounter(upright)
+            }
+            if(downright !== null && downright.dataset.row === up.dataset.row){
+                downright.dataset.status = tile_stats.OPEN
+                this.mineCounter(downright)
+            }
+            if(upleft !== null && upleft.dataset.row === down.dataset.row){
+                upleft.dataset.status = tile_stats.OPEN
+                this.mineCounter(upleft)
+            }
+            if(downleft !== null && downleft.dataset.row !== cell.dataset.row ){
+                downleft.dataset.status = tile_stats.OPEN
+                this.mineCounter(downleft)
+            }
 
             this.createMines(40)
 
+            //now add numbers
+            if(left !== null && left.dataset.row === cell.dataset.row){
+                this.mineCounter(left)
+            }
+            if(right !== null && right.dataset.row === cell.dataset.row){
+                this.mineCounter(right)
+            }
+            if(up !== null){
+                this.mineCounter(up)
+            }
+            if(down !== null){
+                this.mineCounter(down)
+            }
+            if(upright !== null && upright.dataset.row !== cell.dataset.row){
+                this.mineCounter(upright)
+            }
+            if(downright !== null && downright.dataset.row === up.dataset.row){
+                this.mineCounter(downright)
+            }
+            if(upleft !== null && upleft.dataset.row === down.dataset.row){
+                this.mineCounter(upleft)
+            }
+            if(downleft !== null && downleft.dataset.row !== cell.dataset.row ){
+                this.mineCounter(downleft)
+            }
+
             this.firstclick = false;
-    }
+
+
+        }
 
 	}
 
@@ -184,21 +236,105 @@ class GameBoard {
         });
 	}
 
-    updateCounter(){
-        window.onload = function() {
-            var x = 0,
-                max = 3000,
-                ctr = document.getElementById("counter");
-        
-            function incrementCounter() {
-               ctr.innerHTML = x;
-               if (x++ < max)
-                   setTimeout(incrementCounter, 100);
-            }
-        
-            incrementCounter();
+    checkAround(cell){
+
+        //open up first round
+        let id = cell.id
+
+        //clearing spaces around first click tile
+        const left = document.getElementById(id*1 - 1)
+        const right = document.getElementById(id*1 + 1)
+        const up = document.getElementById(id*1 + 15)
+        const down = document.getElementById(id*1 -15)
+        const upright = document.getElementById(id*1 - 14)
+        const downright = document.getElementById(id*1 + 16)
+        const upleft = document.getElementById(id*1 - 16)
+        const downleft = document.getElementById(id*1 + 14)
+
+        console.log(left.dataset.status)
+
+        if(left !== null && left.dataset.row === cell.dataset.row && left.dataset.status !== tile_stats.MINE_HIDDEN){
+            left.dataset.status = tile_stats.OPEN
+            
         }
+
+        if(right !== null && right.dataset.row === cell.dataset.row && right.dataset.status !== tile_stats.MINE_HIDDEN){
+            right.dataset.status = tile_stats.OPEN
+        }
+        if(up !== null && up.dataset.status !== tile_stats.MINE_HIDDEN){
+            up.dataset.status = tile_stats.OPEN
+        }
+        if(down !== null && down.dataset.status !== tile_stats.MINE_HIDDEN){
+            down.dataset.status = tile_stats.OPEN
+        }
+        if(upright !== null && upright.dataset.row !== cell.dataset.row && upright.dataset.status !== tile_stats.MINE_HIDDEN){
+            upright.dataset.status = tile_stats.OPEN
+        }
+        if(downright !== null && downright.dataset.row === up.dataset.row && downright.dataset.status !== tile_stats.MINE_HIDDEN){
+            downright.dataset.status = tile_stats.OPEN
+        }
+        if(upleft !== null && upleft.dataset.row === down.dataset.row && upleft.dataset.status !==tile_stats.MINE_HIDDEN){
+            upleft.dataset.status = tile_stats.OPEN
+        }
+        if(downleft !== null && downleft.dataset.row !== cell.dataset.row && downleft.dataset.status !== tile_stats.MINE_HIDDEN){
+            downleft.dataset.status = tile_stats.OPEN
+        }
+        
+
     }
+
+    mineCounter(cell){
+
+        let mineCount = 0;
+        //open up first round
+        let id = cell.id
+
+        //clearing spaces around first click tile
+        const left = document.getElementById(id*1 - 1)
+        const right = document.getElementById(id*1 + 1)
+        const up = document.getElementById(id*1 + 15)
+        const down = document.getElementById(id*1 -15)
+        const upright = document.getElementById(id*1 - 14)
+        const downright = document.getElementById(id*1 + 16)
+        const upleft = document.getElementById(id*1 - 16)
+        const downleft = document.getElementById(id*1 + 14)
+
+        console.log(left.dataset.status)
+
+        if(left !== null && left.dataset.row === cell.dataset.row && left.dataset.status === tile_stats.MINE_HIDDEN){
+            mineCount++
+        }
+        if(right !== null && right.dataset.row === cell.dataset.row && right.dataset.status === tile_stats.MINE_HIDDEN){
+            mineCount++
+        }
+        if(up !== null && up.dataset.status === tile_stats.MINE_HIDDEN){
+            mineCount++
+        }
+        if(down !== null && down.dataset.status === tile_stats.MINE_HIDDEN){
+            mineCount++
+        }
+        if(upright !== null && upright.dataset.row !== cell.dataset.row && upright.dataset.status === tile_stats.MINE_HIDDEN){
+            mineCount++
+        }
+        if(downright !== null && downright.dataset.row === up.dataset.row && downright.dataset.status === tile_stats.MINE_HIDDEN){
+            mineCount++
+        }
+        if(upleft !== null && upleft.dataset.row === down.dataset.row && upleft.dataset.status ===tile_stats.MINE_HIDDEN){
+            mineCount++
+        }
+        if(downleft !== null && downleft.dataset.row !== cell.dataset.row && downleft.dataset.status === tile_stats.MINE_HIDDEN){
+            mineCount++
+        }
+        //if more than 0 mines, display number
+        if(mineCount >0){
+        cell.textContent = mineCount
+        }
+
+    }
+
+    
+
+    
 }
 
 export default GameBoard;
