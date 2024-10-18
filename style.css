@@ -41,7 +41,7 @@ body{
 }
 
 .game-tile > [data-status="mine_hidden"] {
-    background-color: #929292;
+    background-color: #640303;
     cursor: pointer;
 }
 
@@ -60,9 +60,33 @@ body{
     cursor: pointer;
 }
 
-/*HEADER*/
-    
 
+/*BUTTON CREATED */
+.button {
+    cursor: pointer;
+    background-color: #aa0404;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.button2 {
+    cursor: pointer;
+    background-color: #176d0c;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+    
+/*HEADER*/
 header {
     justify-content: space-between;
     align-items: center;
@@ -104,7 +128,7 @@ nav ul {
 
 .intro-text {
     padding-top: 50px;
-    padding-bottom: 20px;
+    padding-bottom: px;
     text-align: center;
     font-weight: bold;
     font-size: 1.2em;
@@ -142,7 +166,7 @@ nav ul {
 .game-result {
     font-weight: bold;
     text-align: center;
-    font-size: 1.2em;
+    font-size: 20px;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 50px;

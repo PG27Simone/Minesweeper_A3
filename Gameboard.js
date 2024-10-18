@@ -7,7 +7,6 @@ const tile_stats = {
     OPEN: "open",
 }
 
-
 class GameBoard {
     constructor(rows, cols, mineCount) {
         this.rows = rows;
@@ -150,7 +149,7 @@ class GameBoard {
                 cell.dataset.status = tile_stats.OPEN
 
                 //numbering
-                this.mineCounter(cell)
+                this.moveNext(cell)  
             }
 
         }else{
@@ -181,6 +180,7 @@ class GameBoard {
 
             console.log(downleft)
 
+            //opening surrounding cells
             if(left !== null && left.dataset.row === cell.dataset.row){
                 left.dataset.status = tile_stats.OPEN
             }
@@ -206,6 +206,7 @@ class GameBoard {
                 downleft.dataset.status = tile_stats.OPEN
             }
 
+            //create mines around 8x8 grid of start
             this.createMines(40)
 
             //now add numbers and spread
@@ -250,10 +251,12 @@ class GameBoard {
                 //this.moveNext(downleft)
             }  
             
-        this.moveNext(left)      
+        this.moveNext(left) 
+        this.moveNext(cell)     
         }
 	}
 
+    //win the game
     gameWin(){
         this.isgameOver = true;
 
@@ -266,6 +269,7 @@ class GameBoard {
 
         //restart
         var button = document.createElement("button");
+        button.className = "button2"    
         button.innerHTML = "Restart?";
         var body = document.getElementById("results");
         body.appendChild(button);
@@ -287,6 +291,7 @@ class GameBoard {
 		
         //restart
         var button = document.createElement("button");
+        button.className = "button" 
         button.innerHTML = "Restart?";
         var body = document.getElementById("results");
         body.appendChild(button);
@@ -347,6 +352,7 @@ class GameBoard {
 
     }
 
+    //count mines to put number on the cell
     mineCounter(cell){
 
         let mineCount = 0;
@@ -363,7 +369,7 @@ class GameBoard {
         const upleft = document.getElementById(id*1 - 16)
         const downleft = document.getElementById(id*1 + 14)
 
-
+        //if mine hidden aorund, up the number
         if(left !== null && left.dataset.row === cell.dataset.row && left.dataset.status === tile_stats.MINE_HIDDEN){
             mineCount++
         }
@@ -388,10 +394,10 @@ class GameBoard {
         if(downleft !== null && downleft.dataset.row !== cell.dataset.row && downleft.dataset.status === tile_stats.MINE_HIDDEN){
             mineCount++
         }
-        //if more than 0 mines, display number
+        //if more than 0 mines, display number inside the cell
         if(mineCount >0){
-        cell.textContent = mineCount
-        cell.dataset.status = tile_stats.NUMBER
+            cell.textContent = mineCount
+            cell.dataset.status = tile_stats.NUMBER
         }
 
     }
@@ -449,7 +455,7 @@ class GameBoard {
         this.moveNext(down)
 
     }
-    
+  
 }
 
 export default GameBoard;
